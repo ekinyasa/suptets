@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superpower — Get better at being healthy, every year</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      background: #fff;
+      color: #fff;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    /* ═════════════════════════════════════════════
+       NAV COMPONENT — fixed, full width
+       Mirrors: sp-navbar3_component
+    ═════════════════════════════════════════════ */
+    .sp-navbar3_component {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9999;
+      will-change: transform;
+    }
+
+    /* ── Banner ── */
+    .sp-navbar3_banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      height: 50px;
+      background: white;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: rgb(24, 24, 27);
+      font-size: 0.8125rem; /* 13px */
+      text-decoration: none;
+    }
+
+    .banner-inner {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .banner-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .banner-dot svg { width: 8px; height: 8px; }
+
+    .banner-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: rgb(24, 24, 27);;
+      font-weight: 400;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      padding-bottom: 1px;
+    }
+
+    /* ── Wrapper ── */
+    /* Source: sp-navbar3_wrapper
+       Normal: padding 1.5rem 4.5rem; position relative; display flex; align-items center; justify-content center
+       Scrolled: padding 1rem 0
+    */
+    .sp-navbar3_wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 4.5rem;
+      position: relative;
+      transition: padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sp-navbar3_wrapper.is-scrolled {
+      padding: 1rem 0;
+    }
+
+    /* Logo — absolutely centered */
+    /* Source: position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) */
+    .sp-navbar3_logo {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      flex-shrink: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_logo {
+      transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    /* ── Inner pill ── */
+    /* Source: sp-navbar3_inner
+       Normal: width 100%; border-radius 0; bg transparent; padding 0; transition all 0.5s
+       Scrolled: max-width 56rem; bg rgba(0,0,0,0.6); backdrop-filter blur(1.5rem); padding 0.375rem 0.375rem 0.375rem 1.5rem; gap 4rem
+    */
+    .sp-navbar3_inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      border-radius: 624.9375rem;
+      transition:
+        max-width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        gap 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        backdrop-filter 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 100%;
+      background-color: transparent;
+      padding: 0;
+      gap: 0;
+    }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_inner {
+      max-width: 56rem;
+      background-color: rgba(0,0,0,0.6);
+      -webkit-backdrop-filter: blur(1.5rem);
+      backdrop-filter: blur(1.5rem);
+      padding: 0.375rem 0.375rem 0.375rem 1.5rem;
+      gap: 4rem;
+    }
+
+    /* ── Left (links) ── */
+    .sp-navbar3_left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      width: 28rem;
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_left { width: auto; }
+
+    .sp-navbar3_link {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      white-space: nowrap;
+      transition: opacity 0.15s ease-out;
+    }
+    .sp-navbar3_link:hover { opacity: 0.7; }
+
+    /* ── Right (actions) ── */
+    .sp-navbar3_right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+      width: 25.5rem;
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_right { width: auto; }
+
+    .sp-navbar3_login {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      white-space: nowrap;
+    }
+    .sp-navbar3_login:hover { opacity: 0.7; }
+
+    .sp-navbar3_cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #18181b;
+      background-color: #fff;
+      border-radius: 624.938rem;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      white-space: nowrap;
+      font-weight: 500;
+      transition: padding 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s;
+    }
+    .sp-navbar3_cta:hover { opacity: 0.85; }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_cta {
+      padding: 0.5rem 1rem;
+    }
+
+    /* ═════════════════════════════════════════════
+       HERO SECTION
+       section_sp2-home-hero: height calc(100dvh - 48px); margin-top 3.125rem; padding 0 0.5rem 0.5rem
+       section_sp2-home-hero-inner: border-radius 0.75rem; padding-bottom 4rem; padding-left 4rem; height 100%
+    ═════════════════════════════════════════════ */
+    .section_sp2-home-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 100%;
+      height: calc(100dvh - 50px);  /* banner height */
+      margin: 3.125rem 0 0;          /* push below the nav */
+      padding: 0 0.5rem 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section_sp2-home-hero-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      align-self: stretch;
+      height: 100%;
+      border-radius: 0.75rem;
+      padding-bottom: 4rem;
+      padding-left: 4rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+
+      background: 
+      radial-gradient(ellipse 75% 85% at 18% 38%, rgba(28,46,53,0.32) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 65% at 88% 72%, rgba(36,58,52,0.38) 0%, transparent 60%),
+      linear-gradient(155deg, #1C1F21 0%, #0D1118 42%, #0A0E12 100%);
+
+      background-image: url('assets/images/waves.png');
+      background-size: auto 130%;
+      background-position: bottom center;
+    }
+
+
+    .section_sp2-home-hero-inner::after {
+      content: '';
+      position: absolute; 
+      inset: -280vw;
+      background:
+        radial-gradient(50% 45% at 72% 30%, rgba(160, 110, 50, 0.3) 0%, transparent 70%),
+        radial-gradient(51% 60% at 18% 68%, rgba(110, 80, 170, 0.3) 0%, transparent 80%);
+      filter: blur(300px);     /* sadece bu gradientleri etkiler */
+      pointer-events: none;
+      z-index: 0;
+
+        
+    }
+
+    .sp2-home-hero_component {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      z-index: 10;
+      position: relative;
+    }
+
+    .sp2-hero_bg-video {
+      position: absolute;
+      inset: 0%;
+      }
+
+
+      .video-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: inherit;
+      background: transparent;
+      --vc-fade-in: 420ms;
+      --vc-fade-out: 520ms;
+      --vc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      -webkit-transform: translateZ(0);
+      }
+
+
+      .video-card {
+      cursor: pointer;
+      flex-flow: column;
+      justify-content: center;
+      align-items: end;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      }
+
+      .video-card div{
+            display: flex;width: 16vw;
+
+      }
+
+    .video-card.is-events-none {
+      pointer-events: none;
+    }
+
+      .video-card:not([data-vc-no-cardclick]):is( [data-vc-lightbox], [data-vc-bg], :not([data-vc-bg]) ) {
+      cursor: pointer;
+      }
+  
+      .video-card .vc-poster {
+        position: absolute;
+        inset: 0;
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 0;
+        opacity: 0.6;
+        pointer-events: none;
+        transition: opacity var(--vc-fade-out) var(--vc-ease);
+        will-change: opacity;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        align-self: flex-end;
+        justify-self: flex-end;
+        margin-right: 270px;
+      }
+
+    .video-card.is-bg .vc-poster {
+    opacity: 0.6;
+    pointer-events: none;
+    }
+
+    .video-card video.vc-video {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity var(--vc-fade-in) var(--vc-ease);
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    }
+
+    .video-card.is-bg video.vc-video {
+    opacity: 1 !important;
+    }
+    
+
+    /* badge */
+    .badge_block {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+    .badge_icon { width: 14px; height: 14px; }
+
+    /* h1 — Source: font-size 3.75rem; letter-spacing -0.02em; line-height 1 */
+    .heading-style-h1 {
+      font-size: 3.75rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 1rem;
+      .line-break{height: 20px;}
+    }
+
+    .heading-style-h1 .italic {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .sp2-home-hero_content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      max-width: 37rem;
+      color: #fff;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .button-group {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      flex-wrap: wrap;
+    }
+
+    /* CTA primary (solid white) */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #fff; color: #18181b;
+      border: none; border-radius: 624.938rem;
+      font-size: 0.9375rem; font-weight: 500;
+      padding: 0.75rem 1.375rem;
+      transition: opacity 0.15s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { opacity: 0.87; transform: translateY(-1px); }
+
+    /* CTA secondary (outline) */
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.06); color: #fff;
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 624.938rem;
+      font-size: 0.9375rem; font-weight: 300;
+      padding: 0.75rem 1.375rem;
+      transition: background 0.15s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+
+    .btn-arrow { width: 13px; height: 13px; }
+
+    /* Bottom notes (stats) */
+    .sp2-home-hero_bottom-notes {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1.5rem;
+      color: rgba(255,255,255,0.55);
+      position: relative;
+      z-index: 10;
+    }
+
+    .bottom-note {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 300;
+    }
+
+    .check-icon {
+      width: 15px; height: 15px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .check-icon svg { width: 7px; height: 7px; }
+
+    /* ═════════════════════════════════════════════
+       HOWITWORKS SECTION
+       Source: height 800vh; position relative; color #fff
+       Stage: position sticky; top 0.5rem; width calc(100% - 1rem); height calc(100vh - 1rem); margin 0 0.5rem; border-radius 0.5rem; overflow hidden
+    ═════════════════════════════════════════════ */
+    .howitworks {
+      color: #fff;
+      width: 100%;
+      height: 800vh;
+      font-size: 1rem;
+      line-height: 1.4;
+      position: relative;
+    }
+
+    .howitworks__stage {
+      border-radius: 0.5rem;
+      width: calc(100% - 1rem);
+      height: calc(100vh - 1rem);
+      margin: 0 0.5rem;
+      position: sticky;
+      top: 0.5rem;
+      overflow: hidden;
+    }
+
+    /* ── bg slot ── */
+    .howitworks__bg-slot {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .howitworks__bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+      visibility: hidden;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* Background gradients (replace actual photos) */
+    .howitworks__bg[data-howitworks-bg="0"] {
+      background:
+        radial-gradient(ellipse 80% 70% at 58% 42%, rgba(140,90,30,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 65%, rgba(90,55,15,0.45) 0%, transparent 55%),
+        #100d08;
+    }
+    .howitworks__bg[data-howitworks-bg="1"] {
+      background:
+        radial-gradient(ellipse 75% 65% at 52% 48%, rgba(40,60,120,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 45% at 22% 72%, rgba(25,45,95,0.45) 0%, transparent 55%),
+        #08090e;
+    }
+    .howitworks__bg[data-howitworks-bg="2"] {
+      background:
+        radial-gradient(ellipse 75% 65% at 55% 40%, rgba(35,95,70,0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 50% at 28% 72%, rgba(20,70,50,0.4) 0%, transparent 55%),
+        #080e0b;
+    }
+    .howitworks__bg[data-howitworks-bg="3"] {
+      background:
+        radial-gradient(ellipse 75% 65% at 50% 42%, rgba(90,45,120,0.55) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 50% at 72% 70%, rgba(65,30,95,0.4) 0%, transparent 55%),
+        #0c090f;
+    }
+
+    @keyframes howitworks-bg-enter {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes howitworks-bg-prev {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-11rem); }
+    }
+    @keyframes howitworks-bg-enter-reverse {
+      from { transform: translateY(-100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes howitworks-bg-prev-reverse {
+      from { transform: translateY(0); }
+      to   { transform: translateY(11rem); }
+    }
+
+    .howitworks__bg.is-active {
+      visibility: visible;
+      z-index: 2;
+      animation: howitworks-bg-enter 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    .howitworks__bg.is-prev {
+      visibility: visible;
+      z-index: 1;
+      animation: howitworks-bg-prev 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+      filter: brightness(0.5);
+    }
+    .howitworks--reverse .howitworks__bg.is-active {
+      animation: howitworks-bg-enter-reverse 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    .howitworks--reverse .howitworks__bg.is-prev {
+      animation: howitworks-bg-prev-reverse 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+
+    /* ── content slot ── */
+    /* Source: position absolute; left 3rem; top 0; bottom 0; z-index 3; width 32rem; max-width calc(100% - 8rem) */
+    .howitworks__content-slot {
+      position: absolute;
+      left: 3rem; top: 0; bottom: 0;
+      z-index: 3;
+      width: 32rem;
+      max-width: calc(100% - 8rem);
+      pointer-events: none;
+    }
+
+    /* Source: position absolute; top 43%; transform translateY(calc(1.5rem - 50%)); opacity 0 */
+    .howitworks__content {
+      position: absolute;
+      top: 43%; left: 0;
+      width: 100%; max-width: 28rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(calc(1.5rem - 50%));
+      transition:
+        opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .howitworks__content.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%);
+      transition-delay: 60ms;
+    }
+    .howitworks--reverse .howitworks__content {
+      transform: translateY(calc(-1.5rem - 50%));
+    }
+    .howitworks--reverse .howitworks__content.is-active {
+      transform: translateY(-50%);
+    }
+
+    .howitworks__title {
+      margin: 0 0 0.5rem;
+      font-size: 2.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: #fff;
+      transition: color 0.4s;
+    }
+    .howitworks__body {
+      margin: 0;
+      font-size: 1.125rem;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+      transition: color 0.4s;
+    }
+
+    /* ── faq slot ── */
+    /* Source: position absolute; bottom 3rem; left 3rem; z-index 3; width 30rem; max-width calc(100% - 8rem) */
+    .howitworks__faq-slot {
+      position: absolute;
+      bottom: 3rem; left: 3rem;
+      z-index: 3;
+      width: 30rem;
+      max-width: calc(100% - 8rem);
+    }
+
+    .howitworks__faq {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      transform: translateY(1.5rem);
+      transition:
+        opacity 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .howitworks__faq.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(0);
+      transition-delay: 290ms;
+    }
+
+    /* ── faq items ── */
+    /* Source: backdrop-filter blur(24px); bg #14141480; border 1px rgba(0,0,0,0.1); border-radius 0.5rem; padding 0.75rem 0.75rem 0.75rem 1.25rem; font-size 1rem; display flex; justify-content space-between; align-items center; gap 1rem */
+    .howitworks__faq-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      padding: 0.75rem 0.75rem 0.75rem 1.25rem;
+      background-color: rgba(20,20,20,0.5);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #fff;
+      text-align: left;
+      box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+      transition: filter 0.1s;
+    }
+    .howitworks__faq-item:hover { filter: brightness(90%); }
+
+    /* ── faq icon ── */
+    /* Source: width 2rem; height 2rem; border-radius 0.25rem; bg rgba(255,255,255,0.1); display flex; align-items center; justify-content center */
+    .howitworks__faq-icon-wrap {
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 0.25rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem; height: 2rem;
+    }
+    .howitworks__faq-icon { display: flex; align-items: center; justify-content: center; }
+    .howitworks__faq-icon svg { width: 20px; height: 20px; }
+
+    /* ── nav ── */
+    /* Source: position absolute; right 3rem; top 50%; transform translateY(-50%); flex-direction column; gap 0.75rem; z-index 5; list-style none */
+    .howitworks__nav {
+      position: absolute;
+      right: 3rem; top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      list-style: none;
+      padding: 0; margin: 0;
+    }
+
+    /* Source: display flex; justify-content flex-end; align-items center; gap 1rem; padding 0 0 0 1rem; font-size 1.125rem; color rgba(255,255,255,0.55); position relative */
+    .howitworks__nav-item {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      padding: 0 0 0 1rem;
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.55);
+      background: none;
+      border: none;
+      white-space: nowrap;
+      cursor: pointer;
+      width: 100%;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .howitworks__nav-item:hover { color: #fff; }
+    .howitworks__nav-item.is-active { color: #fff; }
+
+    /* Vertical bar indicator — ::before */
+    /* Source: position absolute; left 0; top 50%; width 1px; height 1.25rem; background #fff; opacity 0; transform scaleY(0.3); transition 400ms */
+    .howitworks__nav-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      width: 1px; height: 1.25rem;
+      background: #fff;
+      opacity: 0;
+      transform: translate(0, calc(-50% - 0.625rem)) scaleY(0.3);
+      transform-origin: center center;
+      transition:
+        transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity 150ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .howitworks__nav-item.is-active::before {
+      opacity: 1;
+      transform: translate(0, -50%) scaleY(1);
+    }
+
+    .howitworks__nav-label {
+      text-align: right;
+      flex: 1;
+    }
+    .howitworks__nav-num {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* dark mode for slide 0 (light bg image in original) */
+    .howitworks__nav-item--dark { color: rgba(17,17,17,0.5); }
+    .howitworks__nav-item--dark.is-active { color: #111; }
+    .howitworks__nav-item--dark.is-active::before { background: #111; }
+    .howitworks__title--dark,
+    .howitworks__body--dark { color: #111; }
+
+    /* ═════════════════════════════════════════════
+       MODAL OVERLAY
+    ═════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8,8,12,0.75);
+      -webkit-backdrop-filter: blur(14px) saturate(1.2);
+      backdrop-filter: blur(14px) saturate(1.2);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-card {
+      background: #f5f4f0;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(10px) scale(0.98);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .modal-overlay.is-open .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-img-area {
+      position: relative;
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-img-area.img-compare { background: linear-gradient(140deg, #7a2810 0%, #c45020 55%, #6a2008 100%); }
+    .modal-img-area.img-testing { background: linear-gradient(140deg, #162240 0%, #2a4278 55%, #0e1830 100%); }
+    .modal-img-area.img-locations { background: linear-gradient(140deg, #162a1e 0%, #2a5038 55%, #0e1e14 100%); }
+
+    .modal-close-btn {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px;
+      transition: background 0.2s;
+      z-index: 1; line-height: 1;
+    }
+    .modal-close-btn:hover { background: rgba(255,255,255,0.32); }
+
+    .modal-body {
+      padding: 2rem 2.25rem 2.5rem;
+      background: #f5f4f0;
+      color: #111;
+    }
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: #111;
+      margin-bottom: 0.875rem;
+    }
+    .modal-desc {
+      font-size: 0.9375rem;
+      color: rgba(17,17,17,0.6);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    /* comparison bars */
+    .modal-bars { margin-bottom: 1.5rem; }
+    .modal-bar-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.625rem; }
+    .modal-bar-label { font-size: 0.8125rem; color: rgba(17,17,17,0.55); min-width: 100px; font-weight: 400; }
+    .modal-bar-track { flex: 1; height: 3px; background: rgba(17,17,17,0.12); border-radius: 3px; overflow: hidden; }
+    .modal-bar-fill { height: 100%; border-radius: 3px; }
+    .modal-bar-fill.standard { width: 12%; background: rgba(17,17,17,0.25); }
+    .modal-bar-fill.sp { width: 100%; background: #c04520; }
+    .modal-bar-val { font-size: 0.75rem; color: rgba(17,17,17,0.5); min-width: 85px; text-align: right; }
+    .modal-bar-val.is-sp { color: #c04520; font-weight: 500; }
+
+    .modal-stats {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .modal-stat-n {
+      font-size: 2.25rem; font-weight: 300;
+      letter-spacing: -0.04em; color: #111; line-height: 1;
+    }
+    .modal-stat-n sup { font-size: 0.875rem; vertical-align: super; }
+    .modal-stat-label { font-size: 0.75rem; color: rgba(17,17,17,0.55); line-height: 1.4; margin-top: 0.25rem; }
+
+    .modal-footnote {
+      font-size: 0.6875rem; font-style: italic;
+      color: rgba(17,17,17,0.35);
+      border-top: 1px solid rgba(17,17,17,0.1);
+      padding-top: 1rem; margin-top: 0.5rem;
+    }
+
+    .modal-bio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; margin-top: 0.75rem; }
+    .modal-bio-row { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.875rem; color: rgba(17,17,17,0.65); }
+    .modal-bio-n { font-size: 1.375rem; font-weight: 300; color: #111; letter-spacing: -0.03em; min-width: 28px; }
+
+    .modal-loc-text { font-size: 0.9375rem; color: rgba(17,17,17,0.62); line-height: 1.65; font-weight: 300; }
+
+    /* ═════════════════════════════════════════════
+       HAMBURGER BUTTON
+       Source: width 2rem; height 2rem; scrolled → 3.0625rem circle + blur
+    ═════════════════════════════════════════════ */
+    .sp-navbar3_hamburger {
+      cursor: pointer;
+      background: none;
+      border: none;
+      border-radius: 624.9375rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem; height: 2rem;
+      padding: 0;
+      transition:
+        width 0.25s cubic-bezier(0.16,1,0.3,1),
+        height 0.25s cubic-bezier(0.16,1,0.3,1),
+        background-color 0.25s cubic-bezier(0.16,1,0.3,1),
+        backdrop-filter 0.25s cubic-bezier(0.16,1,0.3,1);
+    }
+    .sp-navbar3_wrapper.is-scrolled .sp-navbar3_hamburger {
+      width: 3.0625rem;
+      height: 3.0625rem;
+      background-color: rgba(0,0,0,0.6);
+      -webkit-backdrop-filter: blur(1.5rem);
+      backdrop-filter: blur(1.5rem);
+    }
+    .sp-navbar3_hamburger svg { display: block; }
+
+    /* ═════════════════════════════════════════════
+       SLIDE-OUT MENU
+       Source: width 32rem; height 100vh; bg #fff; border-top-left-radius 1.5rem; border-bottom-left-radius 1.5rem; position fixed; top 0; right -100%; backdrop-filter blur(1.5rem)
+    ═════════════════════════════════════════════ */
+    .sp-navbar3_menu {
+      position: fixed;
+      top: 0; right: 0;
+      width: 32rem;
+      height: 100vh;
+      z-index: 10000;
+      background-color: #fff;
+      border-top-left-radius: 1.5rem;
+      border-bottom-left-radius: 1.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform;
+      visibility: hidden;
+    }
+    .sp-navbar3_menu.is-open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    /* menu top row */
+    .sp-navbar3_menu-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sp-navbar3_menu-title {
+      color: #18181b;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.04rem;
+      line-height: 2.375rem;
+    }
+    .sp-navbar3_menu-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sp-navbar3_menu-login {
+      color: #18181b;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      padding: 0.75rem 1.25rem;
+      text-decoration: none;
+    }
+    .sp-navbar3_menu-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #18181b;
+      color: #fff;
+      border-radius: 624.938rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    .sp-navbar3_menu-cta:hover { opacity: 0.8; }
+    .sp-navbar3_menu-close {
+      cursor: pointer;
+      background: none;
+      border: none;
+      border-radius: 624.938rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem; height: 3rem;
+      padding: 0.5rem;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .sp-navbar3_menu-close:hover { background: rgba(0,0,0,0.05); }
+
+    /* menu nav links */
+    .sp-navbar3_menu-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+      padding-bottom: 3rem;
+    }
+    .sp-navbar3_menu-label {
+      opacity: 0.5;
+      color: #18181b;
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+      padding-bottom: 0.5rem;
+    }
+    .sp-navbar3_menu-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #18181b;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.04rem;
+      line-height: 2.375rem;
+      text-decoration: none;
+      position: relative;
+    }
+    .sp-navbar3_menu-nav-link::before {
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.15s ease-out;
+      flex-shrink: 0;
+    }
+    .sp-navbar3_menu-nav-link:hover::before { width: 0.5rem; }
+
+    /* menu footer columns */
+    .sp-navbar3_menu-footer {
+      display: flex;
+      gap: 1rem;
+      padding-right: 1rem;
+      margin-top: auto;
+    }
+    .sp-navbar3_menu-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    .sp-navbar3_menu-col-label {
+      opacity: 0.5;
+      color: #18181b;
+      font-size: 0.875rem;
+      line-height: 1.3125rem;
+    }
+    .sp-navbar3_menu-col-link {
+      color: #18181b;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .sp-navbar3_menu-col-link:hover { opacity: 0.6; }
+
+    /* menu overlay */
+    .sp-navbar3_overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .sp-navbar3_overlay.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ═════════════════════════════════════════════
+       MOBILE
+    ═════════════════════════════════════════════ */
+    @media (max-width: 991px) {
+      .sp-navbar3_left { display: none; }
+      .sp-navbar3_right { width: auto; gap: 0.5rem; }
+      .sp-navbar3_right .sp-navbar3_login { display: none; }
+
+      .section_sp2-home-hero { height: calc(100dvh - 50px); }
+      .section_sp2-home-hero-inner { padding-bottom: 2rem; padding-left: 1.75rem; }
+      .heading-style-h1 { font-size: 2.5rem; }
+
+      .howitworks__nav { right: 1.5rem; }
+      .howitworks__nav-item { font-size: 0.875rem; }
+      .howitworks__nav-item::before { display: none; }
+      .howitworks__content-slot { left: 1.5rem; }
+      .howitworks__faq-slot { left: 1.5rem; right: 1.5rem; width: auto; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAV COMPONENT
+═══════════════════════════════════════════════ -->
+<div class="sp-navbar3_component" id="navComponent">
+
+  <!-- Banner -->
+  <a href="#" class="sp-navbar3_banner">
+    <div class="banner-inner">
+      <div class="banner-dot">
+        <img src="assets/icons/AI-Icon.svg" loading="lazy" alt="">
+      </div>
+      <span>Aliquam id neque  - Tempus laoreet ut nisl</span>
+    </div>
+    <span class="banner-link">
+      Join waitlist
+      <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1.5 4.5h6M4.5 2l2.5 2.5L4.5 7"/>
+      </svg>
+    </span>
+  </a>
+
+  <!-- Navbar wrapper -->
+  <div class="sp-navbar3_wrapper" id="navWrapper">
+
+    <!-- Logo — absolute center -->
+    <a href="#" class="sp-navbar3_logo">
+      <img src="assets/nilufer-ormanli-sutun-logo.svg" alt="niluferormanli Logo" width="368px" height="35px" />
+    </a>
+
+    <!-- Inner (pill on scroll) -->
+    <div class="sp-navbar3_inner">
+
+      <!-- Left: links -->
+      <div class="sp-navbar3_left">
+        <a href="#" class="sp-navbar3_link">What we test</a>
+        <a href="#" class="sp-navbar3_link">Reviews</a>
+        <a href="#" class="sp-navbar3_link">FAQs</a>
+      </div>
+
+      <!-- Right: actions -->
+      <div class="sp-navbar3_right">
+        <a href="#" class="sp-navbar3_login">Log in</a>
+        <a href="#" class="sp-navbar3_cta">Join</a>
+        <button type="button" class="sp-navbar3_hamburger" id="hamburgerBtn" aria-label="Open menu">
+          <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="2"  cy="2"  r="2" fill="white"/>
+            <circle cx="10" cy="2"  r="2" fill="white"/>
+            <circle cx="18" cy="2"  r="2" fill="white"/>
+            <circle cx="2"  cy="11" r="2" fill="white"/>
+            <circle cx="10" cy="11" r="2" fill="white"/>
+            <circle cx="18" cy="11" r="2" fill="white"/>
+            <circle cx="2"  cy="20" r="2" fill="white"/>
+            <circle cx="10" cy="20" r="2" fill="white"/>
+            <circle cx="18" cy="20" r="2" fill="white"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE-OUT MENU
+═══════════════════════════════════════════════ -->
+<div class="sp-navbar3_overlay" id="menuOverlay"></div>
+
+<div class="sp-navbar3_menu" id="sideMenu">
+
+  <div class="sp-navbar3_menu-top">
+    <div class="sp-navbar3_menu-header">
+      <h3 class="sp-navbar3_menu-title">Menu</h3>
+    </div>
+    <div class="sp-navbar3_menu-actions">
+      <a href="#" class="sp-navbar3_menu-login">Log in</a>
+      <a href="#" class="sp-navbar3_menu-cta">Be a member</a>
+      <button type="button" class="sp-navbar3_menu-close" id="menuCloseBtn" aria-label="Close menu">
+        <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="2"  cy="2"  r="2" fill="black"/>
+          <circle cx="10" cy="2"  r="2" fill="black" opacity="0.1"/>
+          <circle cx="18" cy="2"  r="2" fill="black"/>
+          <circle cx="2"  cy="11" r="2" fill="black" opacity="0.1"/>
+          <circle cx="10" cy="11" r="2" fill="black"/>
+          <circle cx="18" cy="11" r="2" fill="black" opacity="0.1"/>
+          <circle cx="2"  cy="20" r="2" fill="black"/>
+          <circle cx="10" cy="20" r="2" fill="black" opacity="0.1"/>
+          <circle cx="18" cy="20" r="2" fill="black"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="sp-navbar3_menu-nav">
+    <p class="sp-navbar3_menu-label">Explore</p>
+    <a href="#" class="sp-navbar3_menu-nav-link">What we test</a>
+    <a href="#" class="sp-navbar3_menu-nav-link">How it works</a>
+    <a href="#" class="sp-navbar3_menu-nav-link">FAQ</a>
+    <a href="#" class="sp-navbar3_menu-nav-link">Reviews</a>
+    <a href="#" class="sp-navbar3_menu-nav-link">About</a>
+    <a href="#" class="sp-navbar3_menu-nav-link">Gift health</a>
+  </div>
+
+  <div class="sp-navbar3_menu-footer">
+    <div class="sp-navbar3_menu-col">
+      <p class="sp-navbar3_menu-col-label">Compare</p>
+      <a href="#" class="sp-navbar3_menu-col-link">vs Function Health</a>
+      <a href="#" class="sp-navbar3_menu-col-link">vs Mito Health</a>
+      <a href="#" class="sp-navbar3_menu-col-link">vs InsideTracker</a>
+    </div>
+    <div class="sp-navbar3_menu-col">
+      <p class="sp-navbar3_menu-col-label">Company</p>
+      <a href="#" class="sp-navbar3_menu-col-link">Blog</a>
+      <a href="#" class="sp-navbar3_menu-col-link">For Teams</a>
+      <a href="#" class="sp-navbar3_menu-col-link">Careers</a>
+      <a href="#" class="sp-navbar3_menu-col-link">Superpower Labs</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════════ -->
+<div class="section_sp2-home-hero">
+  <div class="section_sp2-home-hero-inner">
+
+    <div class="sp2-home-hero_component">
+       
+    </div>
+
+    <div class="sp2-home-hero_content">
+      <div class="badge_block">
+        <svg class="badge_icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2,7 5.5,10.5 12,3"/>
+        </svg>
+        HSA/ FSA eligible
+      </div>
+
+      <h1 class="heading-style-h1">
+        <span>İzlenirken sesin değişiyor mu?</span>
+        <div class="line-break"></div>
+        <span class="italic" style="font-size: 54px;letter-spacing: 0px;">Ses problemi gibi görünen şey, bazen kapasite problemidir.</span>
+      </h1>
+
+      <p class="hero-sub" style="font-size: 1.6rem;">
+        Evdeki Ses, bedenini, sesini ve ifadenin oluşum<br>
+        sürecini yeniden anlaman için tasarlanmış<br>
+        6 haftalk butunsel bir yolculuk
+      </p>
+
+      <div class="button-group">
+        <a href="#" class="btn-primary">
+          SES PATTERNİ ANALİZİNE BAŞLA
+          <svg class="btn-arrow" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 6.5h9M7 3l3.5 3.5L7 10"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-secondary">
+          Programı Keşfet
+          <svg class="btn-arrow" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 6.5h9M7 3l3.5 3.5L7 10"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="sp2-home-hero_bottom-notes">
+      <div class="bottom-note">
+        <div class="check-icon">
+          <svg viewBox="0 0 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1,3.5 2.8,5.5 6,1.5"/>
+          </svg>
+        </div>
+        <span>Whole body check · Detect 1,000+ conditions</span>
+      </div>
+      <div class="bottom-note">
+        <div class="check-icon">
+          <svg viewBox="0 0 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1,3.5 2.8,5.5 6,1.5"/>
+          </svg>
+        </div>
+        <span>Accessible · Starts at $199/year</span>
+      </div>
+      <div class="bottom-note">
+        <div class="check-icon">
+          <svg viewBox="0 0 7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1,3.5 2.8,5.5 6,1.5"/>
+          </svg>
+        </div>
+        <span>Trusted · 1M biomarkers tested</span>
+      </div>
+    </div>
+
+    
+
+    <div class="sp2-hero_bg-video">
+      <div data-vc-no-loop="" data-src="" aria-label="Open Video" data-type="hls" data-plyr-card="1" data-disable-dblfullscreen="1" data-vc-bg="" class="video-card is-events-none is-bg is-ready is-paused is-ended" data-vc-init="1">
+        <img class="image_cover-absolute1 _w-editor vc-poster" src="assets/images/model.png" />
+        <div>
+          <p style="font-family: 'Instrument Serif', Georgia, serif;font-size: 2rem;font-style: italic;font-weight: 400;z-index: 1;z-index: 1;">
+            Sesin, sen daha<br>
+            konuşmadan değişir.<br>
+            Bunu fark etmek<br>
+            her şeyi değiştirir.
+          </p>
+        </div>
+      </div>
+      
+    </div>
+
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOWITWORKS SECTION — 800vh scroll-driven
+═══════════════════════════════════════════════ -->
+<section data-howitworks class="howitworks">
+  <div class="howitworks__stage">
+
+    <!-- Backgrounds (4 slides) -->
+    <div class="howitworks__bg-slot">
+      <div data-howitworks-bg="0" class="howitworks__bg is-active"></div>
+      <div data-howitworks-bg="1" class="howitworks__bg"></div>
+      <div data-howitworks-bg="2" class="howitworks__bg"></div>
+      <div data-howitworks-bg="3" class="howitworks__bg"></div>
+    </div>
+
+    <!-- Content (left side, changes per slide) -->
+    <div class="howitworks__content-slot">
+      <div data-howitworks-content="0" class="howitworks__content is-active">
+        <h2 class="howitworks__title">Every membership starts with 100+ biomarkers</h2>
+        <p class="howitworks__body">A full body test with a quick 10-min lab draw to get started. Test at 2,000+ Quest locations or at-home.</p>
+      </div>
+      <div data-howitworks-content="1" class="howitworks__content">
+        <h2 class="howitworks__title">All your health data, in one place</h2>
+        <p class="howitworks__body">Upload past labs and sync your wearables (Oura, Whoop, Apple Health and more). Connect the dots across all your data and spot trends early.</p>
+      </div>
+      <div data-howitworks-content="2" class="howitworks__content">
+        <h2 class="howitworks__title">Get a personalized health protocol</h2>
+        <p class="howitworks__body">A clinician-grade action plan after every test with insight on exactly what to do next (lifestyle, diet, supplements).</p>
+      </div>
+      <div data-howitworks-content="3" class="howitworks__content">
+        <h2 class="howitworks__title">Message your private care team 24/7</h2>
+        <p class="howitworks__body">A private care-team in your pocket at all times for any health questions or concerns.</p>
+      </div>
+    </div>
+
+    <!-- FAQ pills (bottom-left) -->
+    <div class="howitworks__faq-slot">
+      <div data-howitworks-faq="0" class="howitworks__faq is-active">
+        <button type="button" data-modal-target="compare" class="howitworks__faq-item">
+          <span>How is Superpower better than a standard physical?</span>
+          <div class="howitworks__faq-icon-wrap">
+            <div class="howitworks__faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+        </button>
+        <button type="button" data-modal-target="testing" class="howitworks__faq-item">
+          <span>What biomarkers do you test?</span>
+          <div class="howitworks__faq-icon-wrap">
+            <div class="howitworks__faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+        </button>
+        <button type="button" data-modal-target="locations" class="howitworks__faq-item">
+          <span>What locations do you test at?</span>
+          <div class="howitworks__faq-icon-wrap">
+            <div class="howitworks__faq-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div data-howitworks-faq="1" class="howitworks__faq">
+        <button type="button" data-modal-target="data-use" class="howitworks__faq-item">
+          <span>How does Superpower use my data?</span>
+          <div class="howitworks__faq-icon-wrap"><div class="howitworks__faq-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/></svg></div></div>
+        </button>
+        <button type="button" data-modal-target="data-protection" class="howitworks__faq-item">
+          <span>How safe and secure is my data?</span>
+          <div class="howitworks__faq-icon-wrap"><div class="howitworks__faq-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/></svg></div></div>
+        </button>
+      </div>
+
+      <div data-howitworks-faq="2" class="howitworks__faq">
+        <button type="button" data-modal-target="protocol" class="howitworks__faq-item">
+          <span>How do we turn labs into a personalized protocol?</span>
+          <div class="howitworks__faq-icon-wrap"><div class="howitworks__faq-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.4 4C10.4 3.558 10.042 3.2 9.6 3.2C9.158 3.2 8.8 3.558 8.8 4V8.8H4C3.558 8.8 3.2 9.158 3.2 9.6C3.2 10.042 3.558 10.4 4 10.4H8.8V15.2C8.8 15.642 9.158 16 9.6 16C10.042 16 10.4 15.642 10.4 15.2V10.4H15.2C15.642 10.4 16 10.042 16 9.6C16 9.158 15.642 8.8 15.2 8.8H10.4V4Z" fill="white"/></svg></div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation (right side) -->
+    <ul class="howitworks__nav">
+      <li class="li">
+        <button type="button" data-howitworks-nav="0" class="howitworks__nav-item is-active">
+          <span class="howitworks__nav-label">A new health check</span>
+          <span class="howitworks__nav-num">01</span>
+        </button>
+      </li>
+      <li class="li">
+        <button type="button" data-howitworks-nav="1" class="howitworks__nav-item">
+          <span class="howitworks__nav-label">All your health data</span>
+          <span class="howitworks__nav-num">02</span>
+        </button>
+      </li>
+      <li class="li">
+        <button type="button" data-howitworks-nav="2" class="howitworks__nav-item">
+          <span class="howitworks__nav-label">Your action plan</span>
+          <span class="howitworks__nav-num">03</span>
+        </button>
+      </li>
+      <li class="li">
+        <button type="button" data-howitworks-nav="3" class="howitworks__nav-item">
+          <span class="howitworks__nav-label">24/7 care team</span>
+          <span class="howitworks__nav-num">04</span>
+        </button>
+      </li>
+    </ul>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FAQ MODAL
+═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div id="modalInner"></div>
+  </div>
+</div>
+
+<!-- Modal templates -->
+<template id="tpl-compare">
+  <div class="modal-img-area img-compare">
+    <button class="modal-close-btn" data-close>×</button>
+    <svg width="52" height="90" viewBox="0 0 52 90" fill="none">
+      <rect x="18" y="0" width="16" height="12" rx="3" fill="rgba(255,255,255,0.3)"/>
+      <rect x="20" y="10" width="12" height="55" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <rect x="20" y="42" width="12" height="23" rx="6" fill="rgba(196,80,32,0.75)"/>
+      <ellipse cx="26" cy="68" rx="6" ry="6" fill="rgba(196,80,32,0.9)"/>
+    </svg>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">How is Superpower better than a typical physical or health check?</h2>
+    <p class="modal-desc">We run 100+ clinically validated biomarkers across heart health, hormones, metabolic health, inflammation, nutrients, liver, kidney, and more. This goes far beyond a standard annual checkup.</p>
+    <div class="modal-bars">
+      <div class="modal-bar-row">
+        <span class="modal-bar-label">Standard checkup</span>
+        <div class="modal-bar-track"><div class="modal-bar-fill standard"></div></div>
+        <span class="modal-bar-val">10 to 15 biomarkers</span>
+      </div>
+      <div class="modal-bar-row">
+        <span class="modal-bar-label" style="font-weight:500;color:#111">superpower</span>
+        <div class="modal-bar-track"><div class="modal-bar-fill sp"></div></div>
+        <span class="modal-bar-val is-sp">100 to 120 biomarkers</span>
+      </div>
+    </div>
+    <div class="modal-stats">
+      <div>
+        <div class="modal-stat-n">85<sup>%</sup></div>
+        <div class="modal-stat-label">of members uncover early risk factors</div>
+      </div>
+      <div>
+        <div class="modal-stat-n">79<sup>%</sup></div>
+        <div class="modal-stat-label">of members uncover heart disease risk</div>
+      </div>
+      <div>
+        <div class="modal-stat-n">49<sup>%</sup></div>
+        <div class="modal-stat-label">of members slow their speed of aging</div>
+      </div>
+    </div>
+    <p class="modal-footnote">This is an anonymized, aggregate analysis conducted on our members.</p>
+  </div>
+</template>
+
+<template id="tpl-testing">
+  <div class="modal-img-area img-testing">
+    <button class="modal-close-btn" data-close>×</button>
+    <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+      <circle cx="35" cy="35" r="28" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+      <circle cx="35" cy="35" r="16" fill="rgba(255,255,255,0.1)"/>
+      <circle cx="35" cy="35" r="6" fill="rgba(255,255,255,0.4)"/>
+    </svg>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">What biomarkers do you test?</h2>
+    <p class="modal-desc">Our comprehensive panel covers every major system of your body — over 100 clinically validated markers across 6 categories.</p>
+    <div class="modal-bio-grid">
+      <div class="modal-bio-row"><span class="modal-bio-n">41</span><span>Heart &amp; metabolic</span></div>
+      <div class="modal-bio-row"><span class="modal-bio-n">19</span><span>Hormones &amp; thyroid</span></div>
+      <div class="modal-bio-row"><span class="modal-bio-n">10</span><span>Cancer &amp; other risks</span></div>
+      <div class="modal-bio-row"><span class="modal-bio-n">7</span><span>DNA health</span></div>
+      <div class="modal-bio-row"><span class="modal-bio-n">6</span><span>Energy</span></div>
+      <div class="modal-bio-row"><span class="modal-bio-n">3</span><span>Aging</span></div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-locations">
+  <div class="modal-img-area img-locations">
+    <button class="modal-close-btn" data-close>×</button>
+    <svg width="60" height="70" viewBox="0 0 60 70" fill="none">
+      <circle cx="30" cy="24" r="12" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+      <circle cx="30" cy="24" r="4" fill="rgba(255,255,255,0.5)"/>
+      <path d="M30 36 Q14 50 30 62 Q46 50 30 36" fill="rgba(255,255,255,0.18)"/>
+    </svg>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">What locations do you test at?</h2>
+    <p class="modal-loc-text">We partner with 2,000+ labs across the US — including Quest Diagnostics and LabCorp. Search by zip code to find the closest location. At-home blood draw is also available in most major US metros.</p>
+  </div>
+</template>
+
+<template id="tpl-data-use">
+  <div class="modal-img-area img-testing">
+    <button class="modal-close-btn" data-close>×</button>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">How does Superpower use my data?</h2>
+    <p class="modal-loc-text">Your data is used solely to generate your health insights, protocols, and care team recommendations. We never sell your data. All data is encrypted at rest and in transit, and governed by HIPAA.</p>
+  </div>
+</template>
+
+<template id="tpl-data-protection">
+  <div class="modal-img-area img-locations">
+    <button class="modal-close-btn" data-close>×</button>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">How safe and secure is my data?</h2>
+    <p class="modal-loc-text">We use bank-level encryption and are fully HIPAA compliant. Your lab results are stored in our secure, audited infrastructure and are never shared with third parties without your explicit consent.</p>
+  </div>
+</template>
+
+<template id="tpl-protocol">
+  <div class="modal-img-area img-compare">
+    <button class="modal-close-btn" data-close>×</button>
+  </div>
+  <div class="modal-body">
+    <h2 class="modal-title">How do we turn labs into a personalized protocol?</h2>
+    <p class="modal-loc-text">Our AI analyzes your 100+ biomarker results against clinical evidence and your goals. It generates ranked, actionable recommendations — lifestyle, nutrition, supplements, and prescriptions — prioritized by the size of their impact on your specific results.</p>
+  </div>
+</template>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Side menu ── */
+  var sideMenu    = document.getElementById('sideMenu');
+  var menuOverlay = document.getElementById('menuOverlay');
+  var hamburgerBtn  = document.getElementById('hamburgerBtn');
+  var menuCloseBtn  = document.getElementById('menuCloseBtn');
+
+  function openMenu() {
+    sideMenu.classList.add('is-open');
+    menuOverlay.classList.add('is-visible');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    sideMenu.classList.remove('is-open');
+    menuOverlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', openMenu);
+  menuCloseBtn.addEventListener('click', closeMenu);
+  menuOverlay.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  /* ── Banner slide-up on scroll ── */
+  var navComponent = document.getElementById('navComponent');
+  var bannerHeight = document.querySelector('.sp-navbar3_banner').offsetHeight;
+  var navWrapper   = document.getElementById('navWrapper');
+
+  function updateNav() {
+    var scrollY = window.scrollY;
+    var shift = Math.min(scrollY, bannerHeight);
+    navComponent.style.transform = 'translateY(' + (-shift) + 'px)';
+    // pill state
+    if (scrollY > 50) {
+      navWrapper.classList.add('is-scrolled');
+    } else {
+      navWrapper.classList.remove('is-scrolled');
+    }
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('resize', function() {
+    bannerHeight = document.querySelector('.sp-navbar3_banner').offsetHeight;
+  });
+
+  /* ── howitworks scroll-driven + click nav ── */
+  var section  = document.querySelector('[data-howitworks]');
+  if (!section) return;
+
+  var TOTAL = 4;
+  var currentIndex = 0;
+  var targetIndex  = 0;
+  var lastTickAt   = 0;
+  var TICK_INTERVAL = 600;
+  var rafId = null;
+
+  var bgs       = section.querySelectorAll('[data-howitworks-bg]');
+  var contents  = section.querySelectorAll('[data-howitworks-content]');
+  var faqs      = section.querySelectorAll('[data-howitworks-faq]');
+  var navItems  = section.querySelectorAll('[data-howitworks-nav]');
+  var titles    = section.querySelectorAll('.howitworks__title');
+  var bodies    = section.querySelectorAll('.howitworks__body');
+
+  function setDark(isDark) {
+    titles.forEach(function(el)   { el.classList.toggle('howitworks__title--dark', isDark); });
+    bodies.forEach(function(el)   { el.classList.toggle('howitworks__body--dark', isDark); });
+    navItems.forEach(function(el) { el.classList.toggle('howitworks__nav-item--dark', isDark); });
+  }
+
+  function setActive(index) {
+    if (index === currentIndex) return;
+    if (index < 0 || index >= TOTAL) return;
+
+    var prevIndex = currentIndex;
+    currentIndex = index;
+    lastTickAt = performance.now();
+
+    section.classList.toggle('howitworks--reverse', index < prevIndex);
+
+    bgs.forEach(function(el) {
+      el.classList.remove('is-active', 'is-prev');
+      var i = parseInt(el.getAttribute('data-howitworks-bg'), 10);
+      if (i === prevIndex) el.classList.add('is-prev');
+      if (i === index) { void el.offsetWidth; el.classList.add('is-active'); }
+    });
+
+    function swap(nodeList, attr) {
+      nodeList.forEach(function(el) {
+        var i = parseInt(el.getAttribute(attr), 10);
+        el.classList.toggle('is-active', i === index);
+      });
+    }
+    swap(contents,  'data-howitworks-content');
+    swap(faqs,      'data-howitworks-faq');
+    swap(navItems,  'data-howitworks-nav');
+
+    // Slide 0 has lighter bg in original — keep dark for our gradients
+    setDark(false);
+  }
+
+  /* Tick loop (throttled multi-step catch-up) */
+  function tickLoop() {
+    if (currentIndex === targetIndex) { rafId = null; return; }
+    var now = performance.now();
+    if (now - lastTickAt >= TICK_INTERVAL) {
+      var dir = currentIndex < targetIndex ? 1 : -1;
+      setActive(currentIndex + dir);
+    }
+    rafId = requestAnimationFrame(tickLoop);
+  }
+
+  function setTarget(index) {
+    if (index < 0) index = 0;
+    if (index >= TOTAL) index = TOTAL - 1;
+    if (index === targetIndex) return;
+    targetIndex = index;
+    if (!rafId) rafId = requestAnimationFrame(tickLoop);
+  }
+
+  /* Scroll → target index */
+  function onScroll() {
+    var rect = section.getBoundingClientRect();
+    var scrolledIn = -rect.top;
+    if (scrolledIn < 0) scrolledIn = 0;
+    var totalScroll = section.offsetHeight - window.innerHeight;
+    var progress = scrolledIn / totalScroll;
+    setTarget(Math.min(TOTAL - 1, Math.floor(progress * TOTAL)));
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* Click nav */
+  navItems.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var i = parseInt(btn.getAttribute('data-howitworks-nav'), 10);
+      targetIndex = i;
+      setActive(i);
+    });
+  });
+
+  /* ── Modal ── */
+  var overlay   = document.getElementById('modalOverlay');
+  var modalInner = document.getElementById('modalInner');
+
+  function openModal(target) {
+    var tplId = 'tpl-' + target;
+    var tpl = document.getElementById(tplId);
+    if (!tpl) return;
+    modalInner.innerHTML = '';
+    modalInner.appendChild(tpl.content.cloneNode(true));
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  section.querySelectorAll('.howitworks__faq-item').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      openModal(btn.getAttribute('data-modal-target'));
+    });
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay || e.target.closest('[data-close]')) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+})();
+</script>
+
+</body>
+</html>
